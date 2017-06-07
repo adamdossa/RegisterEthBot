@@ -1,17 +1,7 @@
-var RegistryABI = [{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"registrars","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_registrarType","type":"uint8"}],"name":"getDetail","outputs":[{"name":"detail","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_registrarType","type":"string"},{"name":"_registrarDetail","type":"string"},{"name":"_registrar","type":"address"}],"name":"createRegistrar","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_registrarType","type":"uint8"}],"name":"getCost","outputs":[{"name":"cost","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"registrarDetails","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_id","type":"bytes32"},{"name":"_addr","type":"address"},{"name":"_result","type":"string"},{"name":"_message","type":"string"}],"name":"error","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_name","type":"string"},{"name":"_registrarType","type":"uint8"}],"name":"lookupName","outputs":[{"name":"addr","type":"address"},{"name":"proof","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"registrarTypes","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_id","type":"bytes32"},{"name":"_name","type":"string"},{"name":"_addr","type":"address"},{"name":"_proof","type":"string"}],"name":"update","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_addr","type":"address"},{"name":"_registrarType","type":"uint8"}],"name":"lookupAddr","outputs":[{"name":"name","type":"string"},{"name":"proof","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_proof","type":"string"},{"name":"_addr","type":"address"},{"name":"_registrarType","type":"uint8"}],"name":"register","outputs":[{"name":"oracleId","type":"bytes32"}],"payable":true,"type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_registrarType","type":"string"},{"indexed":false,"name":"_registrar","type":"address"}],"name":"RegistrarUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_proof","type":"string"},{"indexed":true,"name":"_addr","type":"address"},{"indexed":false,"name":"_id","type":"bytes32"},{"indexed":false,"name":"_registrarType","type":"uint8"}],"name":"RegistrationSent","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_name","type":"string"},{"indexed":true,"name":"_addr","type":"address"},{"indexed":false,"name":"_proof","type":"string"},{"indexed":false,"name":"_id","type":"bytes32"},{"indexed":false,"name":"_registrarType","type":"uint8"}],"name":"NameAddressProofRegistered","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_addr","type":"address"},{"indexed":false,"name":"_id","type":"bytes32"},{"indexed":false,"name":"_result","type":"string"},{"indexed":false,"name":"_message","type":"string"},{"indexed":false,"name":"_registrarType","type":"uint8"}],"name":"RegistrarError","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_actual","type":"address"},{"indexed":false,"name":"_addr","type":"address"},{"indexed":false,"name":"_registrarType","type":"uint8"}],"name":"AddressMismatch","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_funds","type":"uint256"},{"indexed":false,"name":"_cost","type":"uint256"},{"indexed":true,"name":"_addr","type":"address"},{"indexed":false,"name":"_registrarType","type":"uint8"}],"name":"InsufficientFunds","type":"event"}]
-var RegistryAddress = "0x0815d23e06dbfcff170f6a6ccbc4ac0c85b8f246";
+var RegistryABI = [{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"registrars","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_registrarType","type":"uint8"}],"name":"getDetail","outputs":[{"name":"detail","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_registrarType","type":"string"},{"name":"_registrarDetail","type":"string"},{"name":"_registrar","type":"address"}],"name":"createRegistrar","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_registrarType","type":"uint8"}],"name":"getCost","outputs":[{"name":"cost","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"registrarDetails","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_id","type":"bytes32"},{"name":"_addr","type":"address"},{"name":"_result","type":"string"},{"name":"_message","type":"string"}],"name":"error","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_name","type":"string"},{"name":"_registrarType","type":"uint8"}],"name":"lookupName","outputs":[{"name":"addr","type":"address"},{"name":"proof","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"registrarTypes","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_id","type":"bytes32"},{"name":"_name","type":"string"},{"name":"_addr","type":"address"},{"name":"_proof","type":"string"}],"name":"update","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_addr","type":"address"},{"name":"_registrarType","type":"uint8"}],"name":"lookupAddr","outputs":[{"name":"name","type":"string"},{"name":"proof","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_proof","type":"string"},{"name":"_addr","type":"address"},{"name":"_registrarType","type":"uint8"}],"name":"register","outputs":[{"name":"oracleId","type":"bytes32"}],"payable":true,"type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_addr","type":"address"},{"indexed":false,"name":"_registrarType","type":"string"},{"indexed":false,"name":"_registrar","type":"address"}],"name":"RegistrarUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_addr","type":"address"},{"indexed":false,"name":"_proof","type":"string"},{"indexed":false,"name":"_id","type":"bytes32"},{"indexed":false,"name":"_registrarType","type":"uint8"}],"name":"RegistrationSent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_addr","type":"address"},{"indexed":false,"name":"_name","type":"string"},{"indexed":false,"name":"_proof","type":"string"},{"indexed":false,"name":"_id","type":"bytes32"},{"indexed":false,"name":"_registrarType","type":"uint8"}],"name":"NameAddressProofRegistered","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_addr","type":"address"},{"indexed":false,"name":"_id","type":"bytes32"},{"indexed":false,"name":"_result","type":"string"},{"indexed":false,"name":"_message","type":"string"},{"indexed":false,"name":"_registrarType","type":"uint8"}],"name":"RegistrarError","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_addr","type":"address"},{"indexed":false,"name":"_mismatchedAddr","type":"address"},{"indexed":false,"name":"_registrarType","type":"uint8"}],"name":"AddressMismatch","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_addr","type":"address"},{"indexed":false,"name":"_funds","type":"uint256"},{"indexed":false,"name":"_cost","type":"uint256"},{"indexed":false,"name":"_registrarType","type":"uint8"}],"name":"InsufficientFunds","type":"event"}]
+var RegistryAddress = "0xd51cd6b2dc70cefec5f5840b4181211e9ce128e7";
 var RegistryContract = web3.eth.contract(RegistryABI);
 var Registry = RegistryContract.at(RegistryAddress);
-
-//Need to add /status & proof / events stuff
-
-// var event = Registry.RegistrationSent({_addr: web3.eth.accounts[0]});
-// event.watch(function(error, result) {
-//   console.log(JSON.stringify(error));
-//   console.log(JSON.stringify(result));
-// });
-//{_addr: account}, {fromBlock: 0, toBlock: 'latest'}
-// status.sendMessage("test123");
 
 function suggestionsContainerStyle(suggestionsCount) {
     return {
@@ -212,16 +202,17 @@ function register(params) {
   try {
     var gasCost = Registry.getCost.call(registrarEnum(params.registrar));
     var result = Registry.register.sendTransaction(params.proof, web3.eth.accounts[0], registrarEnum(params.registrar), {from: web3.eth.accounts[0], value: gasCost});
-    Registry.RegistrationSent({_addr: web3.eth.accounts[0]},
-      function(error, result) {
-        try {
-          status.sendMessage(JSON.stringify(error));
-          status.sendMessage(JSON.stringify(result));
-        } catch (err) {
-          status.sendMessage(err.message);
-        }
-      }
-    );
+    // var events = Registry.RegistrationSent({_addr: web3.eth.accounts[0]}, {fromBlock: 0});
+    // events.get(
+    //   function(error, result) {
+    //     try {
+    //       status.sendMessage(JSON.stringify(error));
+    //       status.sendMessage(JSON.stringify(result));
+    //     } catch (err) {
+    //       status.sendMessage("Error: " + err.message);
+    //     }
+    //   }
+    // );
     // web3.eth.getAccounts(function(error, account) {status.sendMessage("Got something!" + account);});
     return {"text-message": params.proof + " sent for validation with " + params.registrar + " oracle. Please be patient, this may take several minutes!"};
   } catch (err) {
@@ -270,13 +261,6 @@ function whoAmI(params) {
         console.log(error);
       }
     });
-
-    //     // try {
-    //     //   status.sendMessage(JSON.stringify(error));
-    //     //   status.sendMessage(JSON.stringify(log));
-    //     // } catch (err) {
-    //     //   status.sendMessage(err.message);
-    //     // }
 
     var result = Registry.lookupAddr.call(web3.eth.accounts[0], registrarEnum(params.registrar));
     if (result[0] == 0) {
@@ -352,3 +336,42 @@ var details = {
 };
 
 status.command(details);
+
+function getStatus(params) {
+  try {
+    var events = Registry.allEvents({fromBlock: web3.eth.blockNumber - 10000});
+    var allEvents = events.get();
+    var noEvents = true;
+    for (var i = 0; i < allEvents.length; i++) {
+      if (allEvents[i].args['_addr'] == web3.eth.accounts[0]) {
+        var latestEvent = allEvents[i];
+        noEvents = false;
+      }
+    }
+    if (noEvents) {
+      return {"text-message": "No recent registration status"};
+    }
+    return {"text-message": latestEvent.event + ": " + JSON.stringify(latestEvent.args)};
+  } catch (err) {
+    return {"text-message": "Error: " + err.message};
+  }
+}
+
+var getStatus = {
+  name: "status",
+  icon: "money_white",
+  color: "#5fc48d",
+  title: "Registration Status",
+  description: "Get Registration Status",
+  preview: function (params) {
+    return {
+        markup: status.components.text(
+            {},
+            "What's the latest update on my registration?"
+        )
+    };
+  },
+  handler: getStatus
+};
+
+status.command(getStatus);
