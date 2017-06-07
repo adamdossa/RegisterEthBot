@@ -12,10 +12,11 @@ contract Registry is RegistryI, Ownable {
   event RegistrationSent(string _proof, address indexed _addr, bytes32 _id, uint8 _registrarType);
   event NameAddressProofRegistered(string _name, address indexed _addr, string _proof, bytes32 _id, uint8 _registrarType);
   event RegistrarError(address indexed _addr, bytes32 _id, string _result, string _message, uint8 _registrarType);
-  event AddressMismatch(address _actual, address indexed _addr, uint8 _registrarType);
+  event AddressMismatch(address indexed _actual, address _addr, uint8 _registrarType);
   event InsufficientFunds(uint _funds, uint _cost, address indexed _addr, uint8 _registrarType);
 
   string[] public registrarTypes;
+  string[] public registrarDetails;
   RegistrarI[] public registrars;
 
   mapping (uint8 => mapping (address => string)) addrToName;
@@ -42,13 +43,10 @@ contract Registry is RegistryI, Ownable {
     _;
   }
 
-  function Registry() {
-    foo = "foobar";
-  }
-
-  function createRegistrar(string _registrarType, address _registrar) public onlyOwner {
+  function createRegistrar(string _registrarType, string _registrarDetail, address _registrar) public onlyOwner {
     registrars.push(RegistrarI(_registrar));
     registrarTypes.push(_registrarType);
+    registrarDetails.push(_registrarDetail);
     RegistrarUpdated(_registrarType, _registrar);
   }
 
@@ -74,7 +72,7 @@ contract Registry is RegistryI, Ownable {
         return;
       }
 
-      bytes32 id = registrars[_registrarType].register.value(this.balance)(_proof, _addr);
+      bytes32 id = registrars[_registrarType].register.value(cost)(_proof, _addr);
       RegistrationSent(_proof, _addr, id, _registrarType);
 
       registrarIdToType[id] = _registrarType;
@@ -96,6 +94,10 @@ contract Registry is RegistryI, Ownable {
 
   function error(bytes32 _id, address _addr, string _result, string _message) onlyRegistrar {
     RegistrarError(_addr, _id, _result, _message, registrarIdToType[_id]);
+  }
+
+  function getDetail(uint8 _registrarType) public constant validRegistrar(_registrarType) returns(string detail) {
+    return registrarDetails[_registrarType];
   }
 
 }
