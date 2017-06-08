@@ -207,13 +207,6 @@ function register(params) {
   try {
     var gasCost = Registry.getCost.call(registrarEnum(params.registrar));
     var result = Registry.register.sendTransaction(params.proof, web3.eth.accounts[0], registrarEnum(params.registrar), {from: web3.eth.accounts[0], value: gasCost});
-    // return {
-    //     event: "register",
-    //     params: [],
-    //     request: {
-    //         command: "latestStatus"
-    //     }
-    // };
     return {"text-message": "Proof of \"" + params.proof + "\" has been shipped to the " + params.registrar + " Oraclize contract for validation!\n\nPlease be patient, this may take several minutes!\n\nUse */latestStatus* to check for updates."};
   } catch (err) {
     return {"text-message": "Error: " + err.message};
