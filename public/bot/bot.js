@@ -209,6 +209,13 @@ function register(params) {
   try {
     var gasCost = Registry.getCost.call(registrarEnum(params.registrar));
     var result = Registry.register.sendTransaction(params.proof, web3.eth.accounts[0], registrarEnum(params.registrar), {from: web3.eth.accounts[0], value: gasCost});
+//    return {
+//        event: "register",
+//        params: [],
+//        request: {
+//            command: "latestStatus"
+//        }
+//    };
     return {"text-message": "Proof: " + params.proof + " has been shipped to the " + params.registrar + " Oraclize query for validation!\nPlease be patient, this may take several minutes!"};
   } catch (err) {
     return {"text-message": "Error: " + err.message};
@@ -332,7 +339,7 @@ var details = {
 
 status.command(details);
 
-function getStatus(params) {
+function latestStatus(params) {
   try {
     var events = Registry.allEvents({fromBlock: web3.eth.blockNumber - 10000});
     var allEvents = events.get();
@@ -352,8 +359,8 @@ function getStatus(params) {
   }
 }
 
-var getStatus = {
-  name: "status",
+var latestStatus = {
+  name: "latestStatus",
   icon: "money_white",
   color: "#5fc48d",
   title: "Registration Status",
@@ -366,7 +373,7 @@ var getStatus = {
         )
     };
   },
-  handler: getStatus
+  handler: latestStatus
 };
 
 status.command(getStatus);
