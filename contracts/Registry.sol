@@ -8,7 +8,7 @@ import "./RegistrarI.sol";
 
 contract Registry is RegistryI, Ownable {
 
-  event RegistrarUpdated(address indexed _addr, string _registrarType, address _registrar);
+  event RegistrarUpdated(address indexed _addr, string _registrarName, address _registrar, uint8 _registrarType);
   event RegistrationSent(address indexed _addr, string _proof, bytes32 _id, uint8 _registrarType);
   event NameAddressProofRegistered(address indexed _addr, string _name, string _proof, bytes32 _id, uint8 _registrarType);
   event RegistrarError(address indexed _addr, bytes32 _id, string _result, string _message, uint8 _registrarType);
@@ -47,7 +47,7 @@ contract Registry is RegistryI, Ownable {
     registrars.push(RegistrarI(_registrar));
     registrarTypes.push(_registrarType);
     registrarDetails.push(_registrarDetail);
-    RegistrarUpdated(msg.sender, _registrarType, _registrar);
+    RegistrarUpdated(msg.sender, _registrarType, _registrar, uint8(registrars.length) - 1);
   }
 
   function lookupAddr(address _addr, uint8 _registrarType) public constant validRegistrar(_registrarType) returns(string name, string proof) {
