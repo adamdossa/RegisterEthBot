@@ -376,4 +376,5 @@ var latestStatus = {
   handler: latestStatus
 };
 
-status.command(getStatus);
+status.command(latestStatus);
+status.response(latestStatus);
