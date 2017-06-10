@@ -311,7 +311,7 @@ function runDevServer(host, port, protocol) {
 function addToStatus(dappUrl) {
   var deviceIP = process.env.IP || 'localhost';
   child.exec(
-    "./node_modules/.bin/status-dev-cli add --dappUrl " + dappUrl + " --botUrl " + (dappUrl + BOT_SITE_PATH) + " --ip " + deviceIP,
+    "./node_modules/.bin/status-dev-cli add --botUrl " + (dappUrl + BOT_SITE_PATH) + " --ip " + deviceIP,
     {stdio: "inherit"},
     function(error, stdout, stderr) {
       devCliMessages.stdout = stdout;
