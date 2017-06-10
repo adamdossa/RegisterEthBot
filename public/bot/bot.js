@@ -228,7 +228,7 @@ function register(params) {
   try {
     var gasCost = Registry.getCost.call(registrarEnum(params.registrar));
     var result = Registry.register.sendTransaction(params.proof, web3.eth.accounts[0], registrarEnum(params.registrar), {from: web3.eth.accounts[0], value: gasCost});
-    return wrapStatusWithRequest("Proof-of-handle \"" + params.proof + "\" has been shipped to the " + params.registrar + " Oraclize contract for validation!\n\nPlease be patient, this may take several minutes!\n\nClick to see latest status.", params.registrar);
+    return wrapStatusWithRequest("Proof-of-handle \"" + params.proof + "\" has been shipped to the " + params.registrar + " Oraclize contract for validation!\n\nPlease be patient, this may take several minutes!\n\nClick to see latest update.", params.registrar);
     //
     // return {
     //   "text-message": {
