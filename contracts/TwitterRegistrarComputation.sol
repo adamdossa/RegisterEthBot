@@ -6,7 +6,7 @@ contract TwitterRegistrarComputation is RegistrarI, OraclizeRegistrar {
 
   event OracleQuerySent(string _ipfsComputation, string _proof, string _addr, bytes32 _id);
 
-  string ipfsComputation = "QmcYvdBheacKACM55qQbsEDh55SrJ15DZQu7RbSJzrf8k1";
+  string ipfsComputation = "QmYqNMvekTekU1miTTSm8RzzbQUo9Z5eAkG9dRgRX2jrCR";
 
   uint oraclizeGasLimit = 280000;
 
