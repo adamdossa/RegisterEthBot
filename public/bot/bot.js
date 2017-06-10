@@ -137,7 +137,7 @@ function postProofUrl(registrarType) {
   return "Error";
 }
 
-function proofToUrl(proof, account, registrarType) {
+function proofToUrl(proof, account, handle, registrarType) {
   if (registrarType == "Reddit") {
     return "https://www.reddit.com/r/ethereumproofs/comments/" + proof + "/0x92ba5a183563dfdce067492bd420057e43c37edb/";
   }
@@ -153,7 +153,7 @@ function proofToUrl(proof, account, registrarType) {
 status.addListener("init", function (params, context) {
   status.sendMessage("Hello - I'm your friendly neighbourhood RegisterEthBot!");
   status.sendMessage("You can use me to provably and trustlessly associate your Ethereum address with various social media handles.");
-  status.sendMessage("Although me and my contracts don't charge any fees, there is a charge from http://oraclize.it in order to verify your identity off-chain.");
+  status.sendMessage("Although I don't charge any fees, there is a charge from http://oraclize.it in order to verify your identity off-chain.");
   status.sendMessage("Use */details* to see more details on how to register, or go to https://github.com/adamdossa/RegisterEthBot for even more detail!");
 });
 
@@ -166,7 +166,7 @@ function nameToAddress(params) {
   } catch (err) {
     return {"text-message": "Error: " + err.message};
   }
-  return {"text-message": "Handle of " + params.name + " was registered in " + params.registrar + " as " + result[0] + " with proof-of-handle \"" + result[1] + "\".\n" + proofToUrl(result[1], result[0], params.registrar)};
+  return {"text-message": "Handle of " + params.name + " was registered in " + params.registrar + " as " + result[0] + " with proof-of-handle \"" + result[1] + "\".\n" + proofToUrl(result[1], result[0], params.name, params.registrar)};
 
 }
 
@@ -212,7 +212,7 @@ function addressToName(params) {
   } catch (err) {
     return {"text-message": "Error: " + err.message};
   }
-  return {"text-message": "Handle of " + params.addr + " was registered in " + params.registrar + " as " + result[0] + " with proof-of-handle \"" + result[1] + "\".\n" + proofToUrl(result[1], params.addr, params.registrar)};
+  return {"text-message": "Handle of " + params.addr + " was registered in " + params.registrar + " as " + result[0] + " with proof-of-handle \"" + result[1] + "\".\n" + proofToUrl(result[1], params.addr, result[0], params.registrar)};
 }
 
 var addressToName = {
@@ -392,7 +392,7 @@ function latestUpdate(params) {
     if ((latestEvent.event == "RegistrarError") || (latestEvent.event == "AddressMismatch") ||  (latestEvent.event == "InsufficientFunds")) {
       return {"text-message": "Oh dear - we failed to verify your proof-of-handle!\n\nThe error was " + latestEvent.event + " - " + latestEvent.args['_message'] + "."};
     }
-    return wrapStatusWithRequest("Your latest update from " + params.registrar + " is " + latestEvent.event + ".\n\nClick to refresh!", params.registrar);
+    return wrapStatusWithRequest("Your latest update from " + params.registrar + " is\n" + latestEvent.event + ".\n\nClick to refresh!", params.registrar);
   } catch (err) {
     return {"text-message": "Error: " + err.message};
   }
