@@ -8,12 +8,17 @@ import "./RegistrarI.sol";
 
 contract Registry is RegistryI, Ownable {
 
+  //Initialization events
   event RegistrarUpdated(address indexed _addr, string _registrarName, address _registrar, uint8 _registrarType);
+
+  //Success events
   event RegistrationSent(address indexed _addr, string _proof, bytes32 _id, uint8 _registrarType);
   event NameAddressProofRegistered(address indexed _addr, string _name, string _proof, bytes32 _id, uint8 _registrarType);
-  event RegistrarError(address indexed _addr, bytes32 _id, string _result, string _message, uint8 _registrarType);
-  event AddressMismatch(address indexed _addr, address _mismatchedAddr, uint8 _registrarType);
-  event InsufficientFunds(address indexed _addr, uint _funds, uint _cost, uint8 _registrarType);
+
+  //Error events
+  event RegistrarError(address indexed _addr, bytes32 _id, string _result, uint8 _registrarType, string _message);
+  event AddressMismatch(address indexed _addr, address _mismatchedAddr, uint8 _registrarType, string _message);
+  event InsufficientFunds(address indexed _addr, uint _funds, uint _cost, uint8 _registrarType, string _message);
 
   string[] public registrarTypes;
   string[] public registrarDetails;
@@ -62,13 +67,13 @@ contract Registry is RegistryI, Ownable {
 
       //_addr not strictly needed - but we use it to do an upfront check to avoid wasted oracle queries
       if (msg.sender != _addr) {
-        AddressMismatch(msg.sender, _addr, _registrarType);
+        AddressMismatch(msg.sender, _addr, _registrarType, "Sending address does not match supplied address!");
         return;
       }
 
       uint cost = registrars[_registrarType].getCost();
       if (cost > this.balance) {
-        InsufficientFunds(_addr, this.balance, cost, _registrarType);
+        InsufficientFunds(_addr, this.balance, cost, _registrarType, "Insufficient funds sent of Oraclize queries!");
         return;
       }
 
@@ -93,7 +98,7 @@ contract Registry is RegistryI, Ownable {
   }
 
   function error(bytes32 _id, address _addr, string _result, string _message) onlyRegistrar {
-    RegistrarError(_addr, _id, _result, _message, registrarIdToType[_id]);
+    RegistrarError(_addr, _id, _result, registrarIdToType[_id], _message);
   }
 
   function getDetail(uint8 _registrarType) public constant validRegistrar(_registrarType) returns(string detail) {
