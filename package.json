@@ -1,7 +1,7 @@
 {
   "whisper-identity": "13-registereth-bot",
   "name":             "#13 RegisterEth Bot",
-  "bot-url":          "http://localhost:3000/bot/bot.js",
+  "bot-url":          "https://adamdossa.github.io/RegisterEthBot/public/bot/bot.js",
   "version": "0.0.1",
   "description": "Frontend example using truffle v3",
   "scripts": {
