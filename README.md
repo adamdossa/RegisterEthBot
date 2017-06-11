@@ -8,6 +8,10 @@ Hackathon GitHub Issue: https://github.com/status-im/hackathon/issues/13
   "bot-url":          "https://adamdossa.github.io/RegisterEthBot/public/bot/bot.js"}
 ```
 
+NB - this bot needs @rasom latest fixes from:  
+https://github.com/rasom/status-react/tree/jail-improvements  
+I have added the relevant .apk that @rasom provided to my submission.
+
 # RegisterEthBot (Status Hackathon)
 
 This bot facilitates communication with a collection of Smart Contracts (deployed on the Ropsten Ethereum blockchain).
