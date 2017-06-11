@@ -79,3 +79,13 @@ This assumes you are using an Genymotion as your Android emulator:
 1. Log in / create a new user within Status, and in the Console app (in Status) execute /debug On.
 1. In a terminal run `status-dev-cli scan`. You should see a couple of IP addresses - ignore the one which has "56" in it, and use the other below in place of <IPADDRESS>.
 1. In a terminal run `status-dev-cli add --ip <IPADDRESS>` to add your bot to your Status app running in the Genymotion emulator.
+
+## Contract Addresses
+
+Registry: 0x195647cca7be636e03eee0af20b21745d06d7d12
+
+RedditRegistrarComputation: 0x4237b97cf9a566d67b6ac254e2fc9cd645109e75
+
+GithubRegistrarComputation: 0x86fb059a34fc326130a2a4ac274447559837dfa0
+
+TwitterRegistrarComputation: 0x147cdec28faa359fcea7b83cae75e13d7996e93f
