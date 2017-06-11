@@ -12,6 +12,9 @@ NB - this bot needs @rasom latest fixes from:
 https://github.com/rasom/status-react/tree/jail-improvements  
 I have added the relevant .apk that @rasom provided to my submission.
 
+Video Demo:  
+https://youtu.be/ebUiV_DWTNE
+
 # RegisterEthBot (Status Hackathon)
 
 This bot facilitates communication with a collection of Smart Contracts (deployed on the Ropsten Ethereum blockchain).
