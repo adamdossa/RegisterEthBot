@@ -376,14 +376,16 @@ status.command(details);
 
 function latestUpdate(params) {
   try {
-    var events = Registry.allEvents({fromBlock: web3.eth.blockNumber - 1000});
+    var events = Registry.allEvents({fromBlock: web3.eth.blockNumber - 100});
     var allEvents = events.get();
     var noEvents = true;
 
     for (var i = 0; i < allEvents.length; i++) {
-      if ((allEvents[i].args['_addr'] == web3.eth.accounts[0]) && (allEvents[i].args['_registrarType'] == registrarEnum(params.registrar))) {
-        var latestEvent = allEvents[i];
-        noEvents = false;
+      if (allEvents[i].hasOwnProperty("args")) {
+        if ((allEvents[i].args['_addr'] == web3.eth.accounts[0]) && (allEvents[i].args['_registrarType'] == registrarEnum(params.registrar))) {
+          var latestEvent = allEvents[i];
+          noEvents = false;
+        }
       }
     }
     if (noEvents) {
@@ -391,6 +393,9 @@ function latestUpdate(params) {
     }
     if ((latestEvent.event == "RegistrarError") || (latestEvent.event == "AddressMismatch") ||  (latestEvent.event == "InsufficientFunds")) {
       return {"text-message": "Oh dear - we failed to verify your proof-of-handle!\n\nThe error was " + latestEvent.event + " - " + latestEvent.args['_message'] + "."};
+    }
+    if (latestEvent.event == "NameAddressProofRegistered") {
+      return {"text-message": "Your latest update from " + params.registrar + " is\n" + latestEvent.event + "."};
     }
     return wrapStatusWithRequest("Your latest update from " + params.registrar + " is\n" + latestEvent.event + ".\n\nClick to refresh!", params.registrar);
   } catch (err) {
