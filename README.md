@@ -1,3 +1,13 @@
+# DApp and bot for Status.im
+
+Hackathon GitHub Issue: https://github.com/status-im/hackathon/issues/13
+
+```
+{"whisper-identity": "13-registereth-bot",
+  "name":             "#13 RegisterEth Bot",
+  "bot-url":          "https://adamdossa.github.io/RegisterEthBot/public/bot/bot.js"}
+```
+
 # RegisterEthBot (Status Hackathon)
 
 This bot facilitates communication with a collection of Smart Contracts (deployed on the Ropsten Ethereum blockchain).
