@@ -132,7 +132,7 @@ function postProofUrl(registrarType) {
     return "https://gist.github.com/";
   }
   if (registrarType == "Twitter") {
-    return "http://twitter.com/share?text=" + web3.eth.accounts[0];
+    return "https://twitter.com/share?text=" + web3.eth.accounts[0];
   }
   return "Error";
 }
@@ -343,7 +343,8 @@ function details(params) {
   } catch (err) {
     return {"text-message": "Error: " + err.message};
   }
-  return {"text-message": "Details for " + params.registrar + " are\n\n" + result + "\nClick " + postProofUrl(params.registrar) + " to start!"};
+  // return {"text-message": "Details for " + params.registrar + " are\n\n" + result + "\nClick " + postProofUrl(params.registrar) + " to create your proof-of-handle, then come back and use */register* to register!"};
+  return {"text-message": "Details for " + params.registrar + " are\n\n" + result + "\nClick " + postProofUrl(params.registrar) + " to create your proof-of-handle, then come back and use /register to register!"};
 }
 
 var details = {
@@ -376,7 +377,7 @@ status.command(details);
 
 function latestUpdate(params) {
   try {
-    var events = Registry.allEvents({fromBlock: web3.eth.blockNumber - 100});
+    var events = Registry.allEvents({fromBlock: web3.eth.blockNumber - 500});
     var allEvents = events.get();
     var noEvents = true;
 
