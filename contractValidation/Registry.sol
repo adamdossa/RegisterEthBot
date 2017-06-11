@@ -1,34 +1,4 @@
-// <ORACLIZE_API>
-/*
-Copyright (c) 2015-2016 Oraclize SRL
-Copyright (c) 2016 Oraclize LTD
-
-
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
-
-pragma solidity ^0.4.0;//please import oraclizeAPI_pre0.4.sol when solidity < 0.4.0
+pragma solidity ^0.4.8;
 
 contract OraclizeI {
     address public cbAddress;
@@ -1013,4 +983,140 @@ contract usingOraclize {
     }
 
 }
-// </ORACLIZE_API>
+
+contract Ownable {
+  address public owner;
+
+  function Ownable() {
+    owner = msg.sender;
+  }
+
+  modifier onlyOwner() {
+    if (msg.sender != owner) {
+      throw;
+    }
+    _;
+  }
+
+  function transferOwnership(address newOwner) onlyOwner {
+    if (newOwner != address(0)) {
+      owner = newOwner;
+    }
+  }
+
+}
+
+contract RegistryI {
+  function update(bytes32 _id, string _name, address _addr, string _proof);
+  function error(bytes32 _id, address _addr, string _result, string _message);
+}
+
+contract RegistrarI {
+  function register(string _proof, address _addr) payable returns(bytes32 oracleId);
+  function getCost() constant returns (uint cost);
+  //Below functions used for testing and internally
+  function _register(bytes32 oracleId, address expectedAddress, string proof);
+  function _callback(bytes32 _id, string _result);
+  function _clearOracleId(bytes32 oracleId);
+}
+
+contract Registry is RegistryI, Ownable {
+
+  //Initialization events
+  event RegistrarUpdated(address indexed _addr, string _registrarName, address _registrar, uint8 _registrarType);
+
+  //Success events
+  event RegistrationSent(address indexed _addr, string _proof, bytes32 _id, uint8 _registrarType);
+  event NameAddressProofRegistered(address indexed _addr, string _name, string _proof, bytes32 _id, uint8 _registrarType);
+
+  //Error events
+  event RegistrarError(address indexed _addr, bytes32 _id, string _result, uint8 _registrarType, string _message);
+  event AddressMismatch(address indexed _addr, address _mismatchedAddr, uint8 _registrarType, string _message);
+  event InsufficientFunds(address indexed _addr, uint _funds, uint _cost, uint8 _registrarType, string _message);
+
+  string[] public registrarTypes;
+  string[] public registrarDetails;
+  RegistrarI[] public registrars;
+
+  mapping (uint8 => mapping (address => string)) addrToName;
+  mapping (uint8 => mapping (string => address)) nameToAddr;
+  mapping (uint8 => mapping (address => string)) addrToProof;
+  mapping (uint8 => mapping (string => string)) nameToProof;
+  mapping (bytes32 => uint8) registrarIdToType;
+
+  modifier onlyRegistrar {
+    bool isRegistrar = false;
+    for (uint i = 0; i < registrarTypes.length; i++) {
+      if (msg.sender == address(registrars[i])) {
+        isRegistrar = true;
+      }
+    }
+    if (!isRegistrar) throw;
+    _;
+  }
+
+  modifier validRegistrar(uint8 _registrarIndex) {
+    if (_registrarIndex >= registrarTypes.length) {
+      throw;
+    }
+    _;
+  }
+
+  function createRegistrar(string _registrarType, string _registrarDetail, address _registrar) public onlyOwner {
+    registrars.push(RegistrarI(_registrar));
+    registrarTypes.push(_registrarType);
+    registrarDetails.push(_registrarDetail);
+    RegistrarUpdated(msg.sender, _registrarType, _registrar, uint8(registrars.length) - 1);
+  }
+
+  function lookupAddr(address _addr, uint8 _registrarType) public constant validRegistrar(_registrarType) returns(string name, string proof) {
+    return (addrToName[_registrarType][_addr], addrToProof[_registrarType][_addr]);
+  }
+
+  function lookupName(string _name, uint8 _registrarType) public constant validRegistrar(_registrarType) returns(address addr, string proof) {
+    return (nameToAddr[_registrarType][_name], nameToProof[_registrarType][_name]);
+  }
+
+  function register(string _proof, address _addr, uint8 _registrarType) public payable validRegistrar(_registrarType) returns(bytes32 oracleId) {
+
+      //_addr not strictly needed - but we use it to do an upfront check to avoid wasted oracle queries
+      if (msg.sender != _addr) {
+        AddressMismatch(msg.sender, _addr, _registrarType, "Sending address does not match supplied address!");
+        return;
+      }
+
+      uint cost = registrars[_registrarType].getCost();
+      if (cost > this.balance) {
+        InsufficientFunds(_addr, this.balance, cost, _registrarType, "Insufficient funds sent of Oraclize queries!");
+        return;
+      }
+
+      bytes32 id = registrars[_registrarType].register.value(cost)(_proof, _addr);
+      RegistrationSent(_addr, _proof, id, _registrarType);
+
+      registrarIdToType[id] = _registrarType;
+      return id;
+
+  }
+
+  function getCost(uint8 _registrarType) public constant validRegistrar(_registrarType) returns(uint cost) {
+    return registrars[_registrarType].getCost();
+  }
+
+  function update(bytes32 _id, string _name, address _addr, string _proof) onlyRegistrar {
+    addrToName[registrarIdToType[_id]][_addr] = _name;
+    nameToAddr[registrarIdToType[_id]][_name] = _addr;
+    addrToProof[registrarIdToType[_id]][_addr] = _proof;
+    nameToProof[registrarIdToType[_id]][_name] = _proof;
+    NameAddressProofRegistered(_addr, _name, _proof, _id, registrarIdToType[_id]);
+  }
+
+  function error(bytes32 _id, address _addr, string _result, string _message) onlyRegistrar {
+    RegistrarError(_addr, _id, _result, registrarIdToType[_id], _message);
+  }
+
+  function getDetail(uint8 _registrarType) public constant validRegistrar(_registrarType) returns(string detail) {
+    return registrarDetails[_registrarType];
+  }
+
+}
