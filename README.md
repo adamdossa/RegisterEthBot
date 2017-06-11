@@ -18,30 +18,21 @@ The proof-of-handle varies depending on the social media network - currently we 
 
 1. Post your Ethereum address using your social media handle. For the currently implemented registrars this involves:
 
-  - Twitter: tweet out your Ethereum address from your twitter handle.
-  
+  - Twitter: tweet out your Ethereum address from your twitter handle.  
     Your twitter handle is then your proof-of-handle.
   
-  - Reddit: post to /r/ethereumproofs a message containing your Ethereum address.
-  
-    The little hash in the URL linked to your post is your proof-of-handle.
-    
-    e.g. for:
-    
-    https://www.reddit.com/r/ethereumproofs/comments/6gkk1w/0xdaf383e889e15e3615db17d1f86422f2bda539f2/
-    
+  - Reddit: post to /r/ethereumproofs a message containing your Ethereum address.  
+    The little hash in the URL linked to your post is your proof-of-handle.  
+    e.g. for:  
+    https://www.reddit.com/r/ethereumproofs/comments/6gkk1w/0xdaf383e889e15e3615db17d1f86422f2bda539f2/  
     your proof-of-handle would be 6gkk1w
   
-  - Githib: create a public gist with your Ethereum address in the description.
-  
-    The generated gist ID of your gist is your proof-of-handle.
-  
-    e.g. for:
-    
-    https://gist.github.com/adamdossa/cbcc239a915800bfc96d60f1f8ceeb45
-    
-    your proof-of-handle would be cbcc239a915800bfc96d60f1f8ceeb45
-  
+  - Githib: create a public gist with your Ethereum address in the description.  
+    The generated gist ID of your gist is your proof-of-handle.  
+    e.g. for:  
+    https://gist.github.com/adamdossa/cbcc239a915800bfc96d60f1f8ceeb45  
+    your proof-of-handle would be cbcc239a915800bfc96d60f1f8ceeb45   
+ 
 2. Send a transaction from your Ethereum address to the Registry contract, along with your proof-of-handle which is used by the relevant Registrar contract to validate your proof.
 
 ## Architecture of Smart Contracts
