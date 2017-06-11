@@ -59,4 +59,4 @@ This assumes you are using an Genymotion as your Android emulator:
 1. Open the Status app (if you've downloaded the latest nightly build .apk file, this can be dragged onto the Android emulator within Genymotion).
 1. Log in / create a new user within Status, and in the Console app (in Status) execute /debug On.
 1. In a terminal run `status-dev-cli scan`. You should see a couple of IP addresses - ignore the one which has "56" in it, and use the other below in place of <IPADDRESS>.
-1. In a terminal run `IP=<IPADDRESS> npm run start`. This will execute a `status-dev-cli add` and a `status-dev-cli watch` on the relevant bot.js file (in public/bots/ directory). It should also start the RegisterEthBot chat screen on your Android emulator.
+1. In a terminal run `status-dev-cli add --ip <IPADDRESS>` to add your bot to your Status app running in the Genymotion emulator.
